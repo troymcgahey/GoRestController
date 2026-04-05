@@ -1,50 +1,53 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# GoRestController Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Single-task changes (non-negotiable)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Work is delivered in **one discrete task at a time**. A change set MUST address exactly **one** task from the active task list (for example, a single item in `tasks.md` for the current feature).
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- Do not combine unrelated behavior, refactors, dependency upgrades, or “while I’m here” edits with the task in progress.
+- If a task reveals necessary cleanup, **finish the current task** with minimal, task-scoped changes, then open a **new** task for the cleanup.
+- Scope creep is resolved by **splitting** work into additional tasks, not by expanding the current change set.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Commit when the task is done (non-negotiable)
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+When a task is **complete** (behavior matches acceptance, tests and checks you rely on are green), you MUST **commit** that work before starting the next task.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+- Prefer **one commit per completed task** unless the task was explicitly broken into sub-commits agreed for traceability (still one task, ordered commits).
+- Commit messages MUST identify the task (e.g. task ID or title from `tasks.md`) so history maps to planned work.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### III. Pull request per completed task (non-negotiable)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+After each task is committed, you MUST open a **pull request** (or, if your workflow uses stacked PRs, a **new PR** that contains only that task’s commits) before implementation of the **next** task begins on the main line of work.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- A PR MUST be scoped to **one completed task** unless an explicit exception is documented in the PR description and approved by reviewers.
+- Reviewers treat bundled tasks as a **constitution violation** unless the exception is documented and approved.
+
+### IV. Simplicity and traceability
+
+Prefer the smallest change that satisfies the task. Task boundaries exist so history, review, and rollback stay understandable.
+
+## Task definition
+
+- **Task**: A single planned unit of work with clear acceptance criteria, typically one checkbox or numbered item in the feature `tasks.md` (or equivalent agreed tracker).
+- **Task complete**: Acceptance criteria met; automated checks required for this repo pass; work is committed per Principle II.
+
+## Development workflow
+
+1. Pick **one** task; do not start another until this one is merged or explicitly parked per team agreement.
+2. Implement **only** that task; keep diffs focused.
+3. When the task is complete, **commit** (Principle II).
+4. **Open a PR** for that task (Principle III); request review as your process requires.
+5. After merge (or after the PR is approved and merged per policy), take the **next** task.
+
+Emergency production fixes MAY follow a documented hotfix path, but must be **retroactively** reconciled with tasks (e.g. follow-up task to align spec and `tasks.md`).
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution **supersedes** ad hoc habits when they conflict with these rules.
+- **Amendments**: Propose a PR that updates this file, states rationale, and bumps the version line below.
+- **Compliance**: Authors and reviewers verify single-task scope, commit boundaries, and PR boundaries before merge.
+- **Runtime guidance**: Feature work should still flow through Spec Kit (`spec.md` → plan → `tasks.md` → implement) so tasks remain the source of truth for “one task at a time.”
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-04-04 | **Last Amended**: 2026-04-04
