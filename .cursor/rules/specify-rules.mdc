@@ -1,0 +1,36 @@
+---
+description: Project Development Guidelines
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# GoRestController Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2026-04-05
+
+## Active Technologies
+
+- Go 1.23.5 (per `go.mod`) + `net/http` (stdlib), existing `github.com/joho/godotenv`, `github.com/prometheus/client_golang/prometheus/promhttp` (unchanged for this feature) (001-bird-rest-endpoint)
+
+## Project Structure
+
+```text
+backend/
+frontend/
+tests/
+```
+
+## Commands
+
+# Add commands for Go 1.23.5 (per `go.mod`)
+
+## Code Style
+
+Go 1.23.5 (per `go.mod`): Follow standard conventions
+
+## Recent Changes
+
+- 001-bird-rest-endpoint: Added Go 1.23.5 (per `go.mod`) + `net/http` (stdlib), existing `github.com/joho/godotenv`, `github.com/prometheus/client_golang/prometheus/promhttp` (unchanged for this feature)
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->

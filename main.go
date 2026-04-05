@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 
+	"GoRestController/bird"
 	"github.com/joho/godotenv"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
@@ -135,6 +136,13 @@ func getMammalHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, returnMessage)
 }
 
+func getBirdHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	selection := r.URL.Query().Get("bird")
+	label := bird.ResolveLabel(selection)
+	fmt.Fprintln(w, label)
+}
+
 func main() {
 
 	env := os.Getenv("ENV")
@@ -149,6 +157,8 @@ func main() {
 	http.Handle("/metrics", promhttp.Handler())
 
 	http.HandleFunc("/getMammal", getMammalHandler)
+
+	http.HandleFunc("/getBird", getBirdHandler)
 
 	http.HandleFunc("/getEnvironment", getEnvironmentHandler)
 
